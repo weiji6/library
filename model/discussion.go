@@ -6,7 +6,9 @@ var DiscussionID = []string{
 }
 
 type Discussion struct {
+	LabID    string `json:"labId"`
 	LabName  string `json:"labName"`
+	KindID   string `json:"kindId"`
 	KindName string `json:"kindName"`
 	DevID    string `json:"devId"`
 	DevName  string `json:"devName"`
