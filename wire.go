@@ -21,6 +21,7 @@ func InitApp(configPath string) (*router.App, error) {
 		wire.Bind(new(service.SeatService), new(*service.SeatServiceImpl)),
 		wire.Bind(new(service.CreditPoints), new(*service.CreditServiceImpl)),
 		wire.Bind(new(service.Discussion), new(*service.DiscussionImpl)),
+		wire.Bind(new(service.HistoryRecords), new(*service.RecordsServiceImpl)),
 	)
 	return &router.App{}, nil
 }

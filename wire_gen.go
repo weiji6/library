@@ -26,6 +26,9 @@ func InitApp(configPath string) (*router.App, error) {
 	discussionImpl := service.NewDiscussionServiceImpl(client)
 	discussionController := controller.NewDiscussionController(discussionImpl, client)
 	discussionRouter := router.NewDiscussionRouter(discussionController)
-	app := router.NewApp(seatRouter, creditRouter, discussionRouter)
+	recordsServiceImpl := service.NewHistoryRecordsServiceImpl()
+	historyRecordController := controller.NewHistoryRecordController(recordsServiceImpl)
+	historyRecordRouter := router.NewHistoryRecordRouter(historyRecordController)
+	app := router.NewApp(seatRouter, creditRouter, discussionRouter, historyRecordRouter)
 	return app, nil
 }

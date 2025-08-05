@@ -57,18 +57,18 @@ func (ss *SeatServiceImpl) FetchSeat(RoomID string) ([]model.Seat, error) {
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return nil, fmt.Errorf(err.Error())
+		return nil, err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf(err.Error())
+		return nil, err
 	}
 	defer res.Body.Close()
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		return nil, fmt.Errorf(err.Error())
+		return nil, err
 	}
 
 	var seatResp response.GetSeat
@@ -147,23 +147,23 @@ func (ss *SeatServiceImpl) ReserveSeat(message request.Reserve) (string, error) 
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	var ReserveResp response.Reserve
 	if err = json.Unmarshal(body, &ReserveResp); err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	if ReserveResp.Ret != 1 {
@@ -182,24 +182,24 @@ func (ss *SeatServiceImpl) GetRecord() (model.Parsed, error) {
 
 	req, err := http.NewRequest("GET", fullRUL, nil)
 	if err != nil {
-		return model.Parsed{}, fmt.Errorf(err.Error())
+		return model.Parsed{}, err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return model.Parsed{}, fmt.Errorf(err.Error())
+		return model.Parsed{}, err
 	}
 	defer res.Body.Close()
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		return model.Parsed{}, fmt.Errorf(err.Error())
+		return model.Parsed{}, err
 	}
 
 	fmt.Println(string(body))
 
 	if err = json.Unmarshal(body, &record); err != nil {
-		return model.Parsed{}, fmt.Errorf(err.Error())
+		return model.Parsed{}, err
 	}
 
 	for i := range record.Data {
@@ -232,18 +232,18 @@ func (ss *SeatServiceImpl) CancelSeat(ID string) (string, error) {
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	jsonRegexp := regexp.MustCompile(`\{[^}]+}`)

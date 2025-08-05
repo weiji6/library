@@ -7,19 +7,22 @@ type App struct {
 	sr *SeatRouter
 	cr *CreditRouter
 	dr *DiscussionRouter
+	hr *HistoryRecordRouter
 }
 
-func NewApp(sr *SeatRouter, cr *CreditRouter, dr *DiscussionRouter) *App {
+func NewApp(sr *SeatRouter, cr *CreditRouter, dr *DiscussionRouter, hr *HistoryRecordRouter) *App {
 	r := gin.Default()
 	sr.SeatRouter(r)
 	cr.CreditRouter(r)
 	dr.DiscussionRouter(r)
+	hr.HistoryRecordRoute(r)
 
 	return &App{
 		r:  r,
 		sr: sr,
 		cr: cr,
 		dr: dr,
+		hr: hr,
 	}
 }
 

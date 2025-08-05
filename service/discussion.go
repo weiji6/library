@@ -39,18 +39,18 @@ func (ds *DiscussionImpl) GetDiscussion(ClassID string, Date string) ([]model.Di
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return nil, fmt.Errorf(err.Error())
+		return nil, err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf(err.Error())
+		return nil, err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return nil, fmt.Errorf(err.Error())
+		return nil, err
 	}
 
 	var discussionResp response.GetDiscussion
@@ -72,23 +72,23 @@ func (ds *DiscussionImpl) SearchUser(StudentId string) (model.Search, error) {
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return model.Search{}, fmt.Errorf(err.Error())
+		return model.Search{}, err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return model.Search{}, fmt.Errorf(err.Error())
+		return model.Search{}, err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return model.Search{}, fmt.Errorf(err.Error())
+		return model.Search{}, err
 	}
 
 	var searchResp []model.Search
 	if err = json.Unmarshal(body, &searchResp); err != nil {
-		return model.Search{}, fmt.Errorf(err.Error())
+		return model.Search{}, err
 	}
 
 	return searchResp[0], nil
@@ -103,23 +103,23 @@ func (ds *DiscussionImpl) ReserveDiscussion(discussion request.ReserveDiscussion
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	var reserveResp response.Reserve
 	if err = json.Unmarshal(body, &reserveResp); err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	if reserveResp.Ret != 1 {
@@ -136,18 +136,18 @@ func (ds *DiscussionImpl) CancelDiscussion(ID string) (string, error) {
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return "", err
 	}
 
 	jsonRegexp := regexp.MustCompile(`\{[^}]+}`)

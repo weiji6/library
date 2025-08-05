@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"library/model"
 	"library/tool"
 	"net/http"
@@ -27,12 +26,12 @@ func (cs *CreditServiceImpl) GetCreditPoints() (*model.CreditPoints, error) {
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return nil, fmt.Errorf(err.Error())
+		return nil, err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf(err.Error())
+		return nil, err
 	}
 	defer res.Body.Close()
 

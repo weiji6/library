@@ -8,5 +8,6 @@ var ProviderSet = wire.NewSet(
 	NewSeatRouter,
 	NewCreditRouter,
 	NewDiscussionRouter,
+	NewHistoryRecordRouter,
 	NewApp,
 )

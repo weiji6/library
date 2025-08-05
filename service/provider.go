@@ -8,4 +8,5 @@ var ProviderSet = wire.NewSet(
 	NewSeatServiceImpl,
 	NewCreditServiceImpl,
 	NewDiscussionServiceImpl,
+	NewHistoryRecordsServiceImpl,
 )

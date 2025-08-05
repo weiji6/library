@@ -8,4 +8,5 @@ var ProviderSet = wire.NewSet(
 	NewSeatController,
 	NewCreditController,
 	NewDiscussionController,
+	NewHistoryRecordController,
 )

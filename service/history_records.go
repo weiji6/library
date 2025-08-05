@@ -1,43 +1,68 @@
 package service
 
 import (
-	"fmt"
-	"io/ioutil"
+	"library/model"
 	"library/tool"
 	"net/http"
+	"strings"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
-type Records interface {
-	GetHistoryRecords() (string, error)
+type HistoryRecords interface {
+	GetHistoryRecords() ([]model.HistoryRecord, error)
 }
 
 type RecordsServiceImpl struct{}
 
-func NewRecordsServiceImpl() *RecordsServiceImpl {
+func NewHistoryRecordsServiceImpl() *RecordsServiceImpl {
 	return &RecordsServiceImpl{}
 }
 
-// todo:完成解析
-func (rs *RecordsServiceImpl) GetHistoryRecords() (string, error) {
+func (rs *RecordsServiceImpl) GetHistoryRecords() ([]model.HistoryRecord, error) {
 	ls := tool.GetLoginService()
 
 	fullURL := "http://kjyy.ccnu.edu.cn/clientweb/m/a/resvlist.aspx"
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return nil, err
 	}
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return nil, err
 	}
 	defer res.Body.Close()
 
-	body, err := ioutil.ReadAll(res.Body)
+	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
-		return "", fmt.Errorf(err.Error())
+		return nil, err
 	}
 
-	return string(body), nil
+	var records []model.HistoryRecord
+
+	doc.Find("li.item-content").Each(func(i int, item *goquery.Selection) {
+		place := item.Find(".item-title").Text()
+		status := item.Find(".item-after").Text()
+		date := item.Find(".item-subtitle").Text()
+		submitText := item.Find(".item-text").Text()
+		submitParts := strings.Split(submitText, ",")
+		if len(submitParts) >= 2 {
+			floor := submitParts[0]
+			floor = strings.TrimSpace(floor)
+			submitTime := submitParts[2]
+			submitTime = strings.TrimSpace(submitTime)
+
+			records = append(records, model.HistoryRecord{
+				Place:      place,
+				Floor:      floor,
+				Status:     status,
+				Date:       date,
+				SubmitTime: submitTime,
+			})
+		}
+	})
+
+	return records, nil
 }

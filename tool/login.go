@@ -50,13 +50,13 @@ func (ls *LoginServiceImpl) LoginFirst(loginRequest request.Login) error {
 	URL1 := "https://account.ccnu.edu.cn/cas/login?service=http://kjyy.ccnu.edu.cn/loginall.aspx?page="
 	res, err := ls.Client.Get(URL1)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return err
 	}
 
 	lt := regexp.MustCompile(`name="lt"\s+value="([^"]+)"`)
@@ -100,7 +100,7 @@ func (ls *LoginServiceImpl) LoginFirst(loginRequest request.Login) error {
 	URL2 := "https://account.ccnu.edu.cn/cas/login;jsessionid=" + match3[1] + "?service=http://kjyy.ccnu.edu.cn/loginall.aspx?page="
 	req, err := http.NewRequest("POST", URL2, playload)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return err
 	}
 
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
@@ -108,7 +108,7 @@ func (ls *LoginServiceImpl) LoginFirst(loginRequest request.Login) error {
 
 	resp, err := ls.Client.Do(req)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return err
 	}
 	defer resp.Body.Close()
 
@@ -121,13 +121,13 @@ func (ls *LoginServiceImpl) LoginSecond() error {
 	URL1 := "https://account.ccnu.edu.cn/cas/login?service=http://kjyy.ccnu.edu.cn/loginall.aspx?page="
 	res, err := ls.Client.Get(URL1)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return err
 	}
 
 	lt := regexp.MustCompile(`name="lt"\s+value="([^"]+)"`)
@@ -175,7 +175,7 @@ func (ls *LoginServiceImpl) LoginSecond() error {
 	URL2 := "https://account.ccnu.edu.cn/cas/login;jsessionid=" + match3[1] + "?service=http://kjyy.ccnu.edu.cn/loginall.aspx?page="
 	req, err := http.NewRequest("POST", URL2, playload)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return err
 	}
 
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
@@ -183,7 +183,7 @@ func (ls *LoginServiceImpl) LoginSecond() error {
 
 	resp, err := ls.Client.Do(req)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return err
 	}
 	defer resp.Body.Close()
 
