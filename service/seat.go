@@ -26,7 +26,7 @@ type SeatService interface {
 	StartSeatUpdateService(ctx context.Context, redisClient *redis.Client)
 	ReserveSeat(message request.Reserve) (string, error)
 	GetRecord() (model.Parsed, error)
-	CancelSeat(ID string) (string, error)
+	CancelReserve(ID string) (string, error)
 }
 
 type SeatServiceImpl struct {
@@ -225,7 +225,7 @@ func (ss *SeatServiceImpl) GetRecord() (model.Parsed, error) {
 	return record, nil
 }
 
-func (ss *SeatServiceImpl) CancelSeat(ID string) (string, error) {
+func (ss *SeatServiceImpl) CancelReserve(ID string) (string, error) {
 	ls := tool.GetLoginService()
 
 	fullURL := fmt.Sprintf("http://kjyy.ccnu.edu.cn/ClientWeb/pro/ajax/reserve.aspx?act=del_resv&id=%s", ID)

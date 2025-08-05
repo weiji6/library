@@ -98,22 +98,3 @@ func (dc *DiscussionController) ReserveDiscussion(c *gin.Context) {
 		Data:    result,
 	})
 }
-
-func (dc *DiscussionController) CancelDiscussion(c *gin.Context) {
-	id := c.Param("id")
-
-	result, err := dc.ds.CancelDiscussion(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, response.Response{
-			Code:    400,
-			Message: "研讨间取消失败:" + err.Error(),
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, response.Response{
-		Code:    200,
-		Message: "研讨间取消成功",
-		Data:    result,
-	})
-}

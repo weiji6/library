@@ -21,7 +21,6 @@ func (dr *DiscussionRouter) DiscussionRouter(r *gin.Engine) {
 	{
 		discussionGroup.GET("/get", dr.dc.GetDiscussion)
 		discussionGroup.POST("/reserve", dr.dc.ReserveDiscussion)
-		discussionGroup.GET("/cancel/:id", dr.dc.CancelDiscussion)
 
 		discussionGroup.GET("/user/search", dr.dc.SearchUser)
 	}

@@ -9,7 +9,6 @@ import (
 	"library/model"
 	"library/tool"
 	"net/http"
-	"regexp"
 	"strings"
 
 	"github.com/redis/go-redis/v9"
@@ -19,7 +18,6 @@ type Discussion interface {
 	GetDiscussion(ClassID string, Date string) ([]model.Discussion, error)
 	SearchUser(StudentId string) (model.Search, error)
 	ReserveDiscussion(reserve request.ReserveDiscussion) (string, error)
-	CancelDiscussion(ID string) (string, error)
 }
 
 type DiscussionImpl struct {
@@ -127,43 +125,4 @@ func (ds *DiscussionImpl) ReserveDiscussion(discussion request.ReserveDiscussion
 	}
 
 	return reserveResp.Msg, nil
-}
-
-func (ds *DiscussionImpl) CancelDiscussion(ID string) (string, error) {
-	ls := tool.GetLoginService()
-
-	fullURL := fmt.Sprintf("http://kjyy.ccnu.edu.cn/ClientWeb/pro/ajax/reserve.aspx?act=del_resv&id=%s", ID)
-
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		return "", err
-	}
-
-	res, err := ls.Client.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer res.Body.Close()
-
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return "", err
-	}
-
-	jsonRegexp := regexp.MustCompile(`\{[^}]+}`)
-	matches := jsonRegexp.FindAll(body, -1)
-
-	var cancelResp response.Cancel
-
-	for _, m := range matches {
-		if err = json.Unmarshal(m, &cancelResp); err != nil {
-			continue // 忽略无效块
-		}
-		if cancelResp.Ret == 1 {
-			return cancelResp.Msg, nil
-		}
-		return "", fmt.Errorf(cancelResp.Msg)
-	}
-
-	return cancelResp.Msg, nil
 }

@@ -28,6 +28,6 @@ func (sr *SeatRouter) SeatRouter(r *gin.Engine) {
 		seatGroup.POST("/seat/reserve", sr.sc.ReserveSeat)
 		seatGroup.GET("/seat/reserve/SSE", sr.sc.SSEReserveSeat)
 		seatGroup.GET("/seat/record", sr.sc.GetRecord)
-		seatGroup.GET("/seat/cancel/:id", sr.sc.CancelSeat)
+		seatGroup.GET("/seat/cancel/:id", sr.sc.CancelReserve)
 	}
 }

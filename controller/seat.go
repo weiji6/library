@@ -198,10 +198,10 @@ func (sc *SeatController) GetRecord(c *gin.Context) {
 	})
 }
 
-func (sc *SeatController) CancelSeat(c *gin.Context) {
+func (sc *SeatController) CancelReserve(c *gin.Context) {
 	id := c.Param("id")
 
-	result, err := sc.ss.CancelSeat(id)
+	result, err := sc.ss.CancelReserve(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, response.Response{
 			Code:    400,
@@ -212,7 +212,7 @@ func (sc *SeatController) CancelSeat(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response.Response{
 		Code:    200,
-		Message: "座位取消成功",
+		Message: "取消预约成功",
 		Data:    result,
 	})
 }
