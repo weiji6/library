@@ -59,6 +59,9 @@ func (ss *SeatServiceImpl) FetchSeat(RoomID string) ([]model.Seat, error) {
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("content-type", "application/x-www-form-urlencoded")
+	req.Header.Set("origin", "https://account.ccnu.edu.cn")
+	req.Header.Set("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
@@ -149,6 +152,9 @@ func (ss *SeatServiceImpl) ReserveSeat(message request.Reserve) (string, error) 
 	if err != nil {
 		return "", err
 	}
+	req.Header.Set("content-type", "application/x-www-form-urlencoded")
+	req.Header.Set("origin", "https://account.ccnu.edu.cn")
+	req.Header.Set("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
@@ -184,6 +190,9 @@ func (ss *SeatServiceImpl) GetRecord() (model.Parsed, error) {
 	if err != nil {
 		return model.Parsed{}, err
 	}
+	req.Header.Set("content-type", "application/x-www-form-urlencoded")
+	req.Header.Set("origin", "https://account.ccnu.edu.cn")
+	req.Header.Set("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
 
 	res, err := ls.Client.Do(req)
 	if err != nil {
@@ -234,6 +243,9 @@ func (ss *SeatServiceImpl) CancelReserve(ID string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	req.Header.Set("content-type", "application/x-www-form-urlencoded")
+	req.Header.Set("origin", "https://account.ccnu.edu.cn")
+	req.Header.Set("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
 
 	res, err := ls.Client.Do(req)
 	if err != nil {

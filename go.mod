@@ -4,6 +4,7 @@ go 1.23.4
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.3
+	github.com/anaskhan96/soup v1.2.5
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/wire v0.6.0
 	github.com/redis/go-redis/v9 v9.9.0
